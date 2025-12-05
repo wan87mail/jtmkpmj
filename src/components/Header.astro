@@ -11,11 +11,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'Utama', href: '#utama' },
-  { label: 'Tentang', href: '#tentang' },
-  { label: 'Program', href: '#program' },
-  { label: 'Aktiviti', href: '#aktiviti' },
-  { label: 'Hubungi', href: '#hubungi' }
+  { label: 'Utama', href: '/#utama' },
+  { label: 'Tentang', href: '/#tentang' },
+  { label: 'Program', href: '/#program' },
+  { label: 'Aplikasi', href: '/aplikasi' },
+  { label: 'Aktiviti', href: '/#aktiviti' },
+  { label: 'Hubungi', href: '/#hubungi' }
 ];
 ---
 
@@ -23,7 +24,7 @@ const navItems: NavItem[] = [
   <div class="container">
     <nav class="nav">
       <!-- Logo -->
-      <a href="#utama" class="logo" aria-label="JTMK - Laman Utama">
+      <a href="/" class="logo" aria-label="JTMK - Laman Utama">
         <img src="/images/logo.svg" alt="Logo JTMK" width="150" height="40" />
       </a>
 
