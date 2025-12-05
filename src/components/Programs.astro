@@ -1,0 +1,377 @@
+---
+/**
+ * Programs.astro - Programs Section Component
+ * Displays diploma programs offered by JTMK
+ * Features: Card grid layout, hover effects, gradient backgrounds
+ */
+
+interface Program {
+  code: string;
+  title: string;
+  description: string;
+  duration: string;
+  highlights: string[];
+  gradient: string;
+  icon: string;
+}
+
+const programs: Program[] = [
+  {
+    code: 'DIT',
+    title: 'Diploma Teknologi Maklumat',
+    description: 'Program komprehensif meliputi pengaturcaraan, pangkalan data, dan pembangunan sistem maklumat untuk industri.',
+    duration: '2.5 - 3 Tahun',
+    highlights: ['Pengaturcaraan Web & Mobile', 'Pangkalan Data', 'Analisis Sistem', 'Cloud Computing'],
+    gradient: 'linear-gradient(135deg, #0066cc 0%, #00a8e8 100%)',
+    icon: 'code'
+  },
+  {
+    code: 'DIS',
+    title: 'Diploma Sistem Komputer',
+    description: 'Fokus kepada perkakasan komputer, rangkaian, dan penyelenggaraan sistem untuk kerjaya sebagai jurutera IT.',
+    duration: '2.5 - 3 Tahun',
+    highlights: ['Rangkaian Komputer', 'Keselamatan Siber', 'Penyelenggaraan Sistem', 'Server Administration'],
+    gradient: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+    icon: 'server'
+  },
+  {
+    code: 'DDT',
+    title: 'Diploma Teknologi Digital',
+    description: 'Program kreatif merangkumi multimedia, reka bentuk digital, dan teknologi animasi untuk industri kreatif.',
+    duration: '2.5 - 3 Tahun',
+    highlights: ['Reka Bentuk Grafik', 'Animasi 2D/3D', 'Video Editing', 'UI/UX Design'],
+    gradient: 'linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%)',
+    icon: 'palette'
+  }
+];
+
+// SVG icons
+const icons: Record<string, string> = {
+  code: '<polyline points="16 18 22 12 16 6"/> <polyline points="8 6 2 12 8 18"/>',
+  server: '<rect x="2" y="2" width="20" height="8" rx="2" ry="2"/> <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/> <line x1="6" y1="6" x2="6.01" y2="6"/> <line x1="6" y1="18" x2="6.01" y2="18"/>',
+  palette: '<circle cx="13.5" cy="6.5" r=".5"/> <circle cx="17.5" cy="10.5" r=".5"/> <circle cx="8.5" cy="7.5" r=".5"/> <circle cx="6.5" cy="12.5" r=".5"/> <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/>',
+  clock: '<circle cx="12" cy="12" r="10"/> <polyline points="12 6 12 12 16 14"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>'
+};
+---
+
+<section class="programs" id="program">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Program Ditawarkan</h2>
+      <p class="section-subtitle">
+        Pilih program yang sesuai dengan minat dan kerjaya impian anda dalam bidang teknologi maklumat
+      </p>
+    </div>
+
+    <!-- Programs Grid -->
+    <div class="programs-grid">
+      {programs.map((program) => (
+        <article class="program-card" data-animate>
+          <!-- Card Header with Gradient -->
+          <div class="program-header" style={`background: ${program.gradient};`}>
+            <div class="program-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[program.icon]} />
+            </div>
+            <span class="program-code">{program.code}</span>
+            <div class="program-decoration"></div>
+          </div>
+
+          <!-- Card Body -->
+          <div class="program-body">
+            <h3 class="program-title">{program.title}</h3>
+            <p class="program-description">{program.description}</p>
+
+            <!-- Duration -->
+            <div class="program-duration">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons.clock} />
+              <span>Tempoh: {program.duration}</span>
+            </div>
+
+            <!-- Highlights -->
+            <div class="program-highlights">
+              <h4>Fokus Pembelajaran:</h4>
+              <ul>
+                {program.highlights.map((highlight) => (
+                  <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons.check} />
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- CTA Button -->
+            <a href="#hubungi" class="program-cta">
+              Maklumat Lanjut
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Additional Info -->
+    <div class="programs-info" data-animate>
+      <div class="info-box">
+        <h4>Syarat Kemasukan</h4>
+        <p>SPM atau setaraf dengan kelulusan dalam mata pelajaran yang berkaitan. Hubungi kami untuk maklumat lanjut mengenai syarat kemasukan.</p>
+        <a href="#hubungi" class="btn btn-outline">Hubungi Kami</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Programs Section */
+  .programs {
+    padding: var(--space-20) 0;
+    background: var(--light);
+  }
+
+  /* Programs Grid */
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+  }
+
+  /* Program Card */
+  .program-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .program-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Card Header */
+  .program-header {
+    position: relative;
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+  }
+
+  .program-decoration {
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .program-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .program-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--white);
+  }
+
+  .program-code {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 800;
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Card Body */
+  .program-body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .program-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: var(--space-3);
+  }
+
+  .program-description {
+    color: var(--grey);
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+
+  /* Duration */
+  .program-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--light);
+    border-radius: var(--radius);
+    font-size: var(--text-sm);
+    color: var(--grey-dark);
+    margin-bottom: var(--space-4);
+  }
+
+  .program-duration svg {
+    width: 16px;
+    height: 16px;
+    color: var(--primary);
+  }
+
+  /* Highlights */
+  .program-highlights {
+    margin-bottom: var(--space-6);
+    flex-grow: 1;
+  }
+
+  .program-highlights h4 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .program-highlights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .program-highlights li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    font-size: var(--text-sm);
+    color: var(--grey-dark);
+    border-bottom: 1px solid var(--grey-light);
+  }
+
+  .program-highlights li:last-child {
+    border-bottom: none;
+  }
+
+  .program-highlights li svg {
+    width: 16px;
+    height: 16px;
+    color: var(--success);
+    flex-shrink: 0;
+  }
+
+  /* CTA Button */
+  .program-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    background: var(--primary);
+    color: var(--white);
+    font-weight: 500;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    margin-top: auto;
+  }
+
+  .program-cta:hover {
+    background: var(--primary-dark);
+    transform: translateX(5px);
+    color: var(--white);
+  }
+
+  .program-cta svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .program-cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Additional Info Box */
+  .programs-info {
+    text-align: center;
+  }
+
+  .info-box {
+    display: inline-block;
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    border: 2px dashed var(--grey-light);
+  }
+
+  .info-box h4 {
+    font-size: var(--text-xl);
+    color: var(--dark);
+    margin-bottom: var(--space-3);
+  }
+
+  .info-box p {
+    color: var(--grey);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .programs-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .programs {
+      padding: var(--space-16) 0;
+    }
+
+    .programs-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .program-header {
+      padding: var(--space-6);
+    }
+
+    .program-code {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .info-box {
+      padding: var(--space-6);
+    }
+  }
+</style>

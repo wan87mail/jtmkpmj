@@ -1,0 +1,105 @@
+---
+/**
+ * Layout.astro - Base Layout Component
+ * Main layout wrapper for all pages
+ * Includes meta tags, global styles, and common scripts
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+}
+
+const {
+  title,
+  description = 'Jabatan Teknologi Maklumat & Komunikasi (JTMK) - Melahirkan graduan berkemahiran tinggi dalam bidang ICT',
+  keywords = 'JTMK, teknologi maklumat, ICT, politeknik, diploma, komputer, rangkaian, multimedia'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <!-- Basic Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="keywords" content={keywords} />
+  <meta name="author" content="JTMK" />
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ms_MY" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Page Title -->
+  <title>{title}</title>
+
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Global Styles -->
+  <style is:global>
+    @import '../styles/global.css';
+  </style>
+</head>
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="sr-only">Langkau ke kandungan utama</a>
+
+  <!-- Main Content Slot -->
+  <slot />
+
+  <!-- Global JavaScript for smooth scrolling and common interactions -->
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href && href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const headerOffset = 70; // Account for fixed header
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+
+    // Add scroll-based animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '';
+          entry.target.classList.add('animate-slideUp');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements with data-animate attribute
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      el.style.opacity = '0';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

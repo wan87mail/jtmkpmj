@@ -1,0 +1,105 @@
+---
+/**
+ * index.astro - Main Landing Page
+ * JTMK (Jabatan Teknologi Maklumat & Komunikasi) Landing Page
+ * Composes all components into a single page
+ */
+
+// Import Layout
+import Layout from '../layouts/Layout.astro';
+
+// Import Components
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Slider from '../components/Slider.astro';
+import About from '../components/About.astro';
+import Programs from '../components/Programs.astro';
+import Facilities from '../components/Facilities.astro';
+import Footer from '../components/Footer.astro';
+
+// Page metadata
+const pageTitle = 'JTMK - Jabatan Teknologi Maklumat & Komunikasi';
+const pageDescription = 'Selamat datang ke laman web rasmi Jabatan Teknologi Maklumat & Komunikasi (JTMK). Melahirkan graduan berkemahiran tinggi dalam bidang ICT.';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Header / Navigation -->
+  <Header />
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero Section -->
+    <Hero />
+
+    <!-- News & Announcements Slider -->
+    <Slider />
+
+    <!-- About JTMK Section -->
+    <About />
+
+    <!-- Programs Offered Section -->
+    <Programs />
+
+    <!-- Facilities & Activities Section -->
+    <Facilities />
+  </main>
+
+  <!-- Footer -->
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* Page-specific global styles */
+
+  /* Ensure sections have proper spacing from fixed header */
+  section[id] {
+    scroll-margin-top: var(--header-height);
+  }
+
+  /* Smooth page transitions */
+  main {
+    opacity: 1;
+    animation: pageLoad 0.5s ease forwards;
+  }
+
+  @keyframes pageLoad {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Selection color */
+  ::selection {
+    background: var(--primary);
+    color: var(--white);
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Remove focus outline for mouse users */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+  }
+</style>

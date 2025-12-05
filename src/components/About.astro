@@ -1,0 +1,397 @@
+---
+/**
+ * About.astro - About Section Component
+ * Displays department introduction, mission, vision, and key strengths
+ * Features: Grid layout, icon cards, animated elements
+ */
+
+interface Strength {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const strengths: Strength[] = [
+  {
+    icon: 'users',
+    title: 'Pensyarah Berkelayakan',
+    description: 'Tenaga pengajar profesional dengan sijil industri dan pengalaman luas dalam bidang ICT.'
+  },
+  {
+    icon: 'briefcase',
+    title: 'Kerjasama Industri',
+    description: 'Hubungan erat dengan syarikat teknologi untuk latihan industri dan peluang pekerjaan.'
+  },
+  {
+    icon: 'monitor',
+    title: 'Kemudahan Terkini',
+    description: 'Makmal komputer moden dilengkapi teknologi terbaru untuk pembelajaran praktikal.'
+  },
+  {
+    icon: 'book',
+    title: 'Kurikulum Terkemaskini',
+    description: 'Silibus yang sentiasa dikemaskini mengikut keperluan industri semasa.'
+  }
+];
+
+// SVG icons
+const icons: Record<string, string> = {
+  users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/> <circle cx="9" cy="7" r="4"/> <path d="M23 21v-2a4 4 0 0 0-3-3.87"/> <path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  briefcase: '<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/> <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  monitor: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/> <line x1="8" y1="21" x2="16" y2="21"/> <line x1="12" y1="17" x2="12" y2="21"/>',
+  book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/> <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  target: '<circle cx="12" cy="12" r="10"/> <circle cx="12" cy="12" r="6"/> <circle cx="12" cy="12" r="2"/>',
+  eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/> <circle cx="12" cy="12" r="3"/>'
+};
+---
+
+<section class="about" id="tentang">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Tentang JTMK</h2>
+      <p class="section-subtitle">
+        Jabatan Teknologi Maklumat & Komunikasi komited dalam melahirkan
+        graduan berkemahiran tinggi untuk industri ICT
+      </p>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="about-grid">
+      <!-- Introduction Card -->
+      <div class="about-intro" data-animate>
+        <div class="about-intro-content">
+          <h3>Pengenalan</h3>
+          <p>
+            Jabatan Teknologi Maklumat & Komunikasi (JTMK) merupakan salah satu jabatan utama yang menawarkan program diploma dalam bidang teknologi maklumat. Kami komited untuk menyediakan pendidikan berkualiti tinggi yang memenuhi keperluan industri semasa.
+          </p>
+          <p>
+            Dengan tenaga pengajar berpengalaman dan kemudahan moden, kami memastikan setiap pelajar mendapat pendedahan menyeluruh dalam aspek teori dan praktikal teknologi maklumat.
+          </p>
+
+          <!-- Stats inline -->
+          <div class="about-inline-stats">
+            <div class="inline-stat">
+              <span class="inline-stat-number">15+</span>
+              <span class="inline-stat-label">Tahun Beroperasi</span>
+            </div>
+            <div class="inline-stat">
+              <span class="inline-stat-number">3000+</span>
+              <span class="inline-stat-label">Alumni</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mission & Vision Cards -->
+      <div class="about-mission-vision">
+        <!-- Mission -->
+        <div class="mv-card mission" data-animate>
+          <div class="mv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons.target} />
+          </div>
+          <h4>Misi Kami</h4>
+          <p>
+            Melahirkan graduan yang kompeten, berdaya saing dan beretika dalam bidang teknologi maklumat dan komunikasi melalui pendidikan berkualiti dan latihan industri yang relevan.
+          </p>
+        </div>
+
+        <!-- Vision -->
+        <div class="mv-card vision" data-animate>
+          <div class="mv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons.eye} />
+          </div>
+          <h4>Visi Kami</h4>
+          <p>
+            Menjadi jabatan terunggul dalam pendidikan teknologi maklumat dan komunikasi di peringkat nasional, melahirkan tenaga kerja ICT yang inovatif dan berdaya saing global.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strengths Section -->
+    <div class="strengths-section" data-animate>
+      <h3 class="strengths-title">Kelebihan Kami</h3>
+      <div class="strengths-grid">
+        {strengths.map((strength) => (
+          <div class="strength-card">
+            <div class="strength-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[strength.icon]} />
+            </div>
+            <h4 class="strength-title">{strength.title}</h4>
+            <p class="strength-description">{strength.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* About Section */
+  .about {
+    padding: var(--space-20) 0;
+    background: var(--white);
+  }
+
+  /* Main Grid */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    margin-bottom: var(--space-16);
+  }
+
+  /* Introduction Card */
+  .about-intro {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    color: var(--white);
+  }
+
+  .about-intro h3 {
+    font-size: var(--text-2xl);
+    color: var(--white);
+    margin-bottom: var(--space-4);
+    position: relative;
+    display: inline-block;
+  }
+
+  .about-intro h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: var(--radius-full);
+  }
+
+  .about-intro p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    margin-bottom: var(--space-4);
+  }
+
+  .about-intro p:last-of-type {
+    margin-bottom: var(--space-6);
+  }
+
+  /* Inline Stats */
+  .about-inline-stats {
+    display: flex;
+    gap: var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .inline-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inline-stat-number {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .inline-stat-label {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* Mission & Vision */
+  .about-mission-vision {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .mv-card {
+    background: var(--light);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    transition: all var(--transition);
+    border: 1px solid var(--grey-light);
+  }
+
+  .mv-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .mv-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+  }
+
+  .mission .mv-icon {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  }
+
+  .vision .mv-icon {
+    background: linear-gradient(135deg, var(--secondary) 0%, #6f42c1 100%);
+  }
+
+  .mv-icon svg {
+    width: 28px;
+    height: 28px;
+    color: var(--white);
+  }
+
+  .mv-card h4 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--space-3);
+  }
+
+  .mv-card p {
+    color: var(--grey);
+    line-height: 1.7;
+    margin-bottom: 0;
+  }
+
+  /* Strengths Section */
+  .strengths-section {
+    background: var(--light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-12);
+  }
+
+  .strengths-title {
+    text-align: center;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: var(--space-8);
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .strengths-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: var(--radius-full);
+  }
+
+  .strengths-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  .strength-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    text-align: center;
+    transition: all var(--transition);
+    border: 1px solid var(--grey-light);
+  }
+
+  .strength-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+  }
+
+  .strength-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 168, 232, 0.1) 100%);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+    transition: all var(--transition);
+  }
+
+  .strength-card:hover .strength-icon {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  }
+
+  .strength-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--primary);
+    transition: color var(--transition);
+  }
+
+  .strength-card:hover .strength-icon svg {
+    color: var(--white);
+  }
+
+  .strength-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--space-2);
+  }
+
+  .strength-description {
+    font-size: var(--text-sm);
+    color: var(--grey);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .strengths-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about {
+      padding: var(--space-16) 0;
+    }
+
+    .about-intro {
+      padding: var(--space-6);
+    }
+
+    .strengths-section {
+      padding: var(--space-8);
+    }
+
+    .about-inline-stats {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .strengths-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .strength-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

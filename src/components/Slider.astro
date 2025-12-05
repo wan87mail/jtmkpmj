@@ -1,0 +1,629 @@
+---
+/**
+ * Slider.astro - Image/Info Slider Component
+ * Auto-sliding carousel with pure JavaScript
+ * Features: Auto-advance, dots navigation, arrows, pause on hover, touch support
+ */
+
+interface Slide {
+  id: number;
+  title: string;
+  description: string;
+  tag: string;
+  bgGradient: string;
+  icon: string;
+}
+
+const slides: Slide[] = [
+  {
+    id: 1,
+    title: 'Pendaftaran Pelajar Baru Sesi 2025/2026',
+    description: 'Pendaftaran kini dibuka untuk semua program diploma. Rebut peluang anda untuk menyertai keluarga JTMK!',
+    tag: 'Pengumuman',
+    bgGradient: 'linear-gradient(135deg, #0066cc 0%, #00a8e8 100%)',
+    icon: 'megaphone'
+  },
+  {
+    id: 2,
+    title: 'Tahniah! Juara Pertandingan Inovasi Digital',
+    description: 'Pelajar JTMK meraih tempat pertama dalam Pertandingan Inovasi Digital Peringkat Kebangsaan 2024.',
+    tag: 'Pencapaian',
+    bgGradient: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+    icon: 'trophy'
+  },
+  {
+    id: 3,
+    title: 'Lawatan Industri ke Cyberjaya',
+    description: 'Program lawatan industri ke syarikat teknologi terkemuka di Cyberjaya untuk pendedahan kerjaya.',
+    tag: 'Aktiviti',
+    bgGradient: 'linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%)',
+    icon: 'building'
+  },
+  {
+    id: 4,
+    title: 'MoU dengan Syarikat Teknologi',
+    description: 'Kerjasama strategik dengan rakan industri untuk meningkatkan peluang latihan dan pekerjaan.',
+    tag: 'Kerjasama',
+    bgGradient: 'linear-gradient(135deg, #fd7e14 0%, #ffc107 100%)',
+    icon: 'handshake'
+  },
+  {
+    id: 5,
+    title: 'Hari Terbuka JTMK 2025',
+    description: 'Jom sertai Hari Terbuka JTMK untuk mengenali program dan kemudahan yang ditawarkan!',
+    tag: 'Event',
+    bgGradient: 'linear-gradient(135deg, #17a2b8 0%, #6610f2 100%)',
+    icon: 'calendar'
+  }
+];
+
+// SVG icons
+const icons: Record<string, string> = {
+  megaphone: '<path d="M3 11l18-7v14L3 11z M11 11.5v5a2 2 0 1 1-4 0v-5"/>',
+  trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6 M18 9h1.5a2.5 2.5 0 0 0 0-5H18 M4 22h16 M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22 M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22 M18 2H6v7a6 6 0 0 0 12 0V2z"/>',
+  building: '<rect x="4" y="2" width="16" height="20" rx="2" ry="2"/> <path d="M9 22v-4h6v4 M8 6h.01 M16 6h.01 M12 6h.01 M12 10h.01 M12 14h.01 M16 10h.01 M16 14h.01 M8 10h.01 M8 14h.01"/>',
+  handshake: '<path d="M11 17a1 1 0 0 1-1-1v-4a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1z M7 17a1 1 0 0 1-1-1v-4a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1z"/> <path d="M20 8l-8-4-8 4v8l8 4 8-4V8z"/> <path d="M12 12l8-4"/> <path d="M12 12v10"/> <path d="M12 12L4 8"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/> <line x1="16" y1="2" x2="16" y2="6"/> <line x1="8" y1="2" x2="8" y2="6"/> <line x1="3" y1="10" x2="21" y2="10"/> <path d="M8 14h.01 M12 14h.01 M16 14h.01 M8 18h.01 M12 18h.01 M16 18h.01"/>'
+};
+---
+
+<section class="slider-section" id="slider">
+  <div class="container">
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Berita & Pengumuman</h2>
+      <p class="section-subtitle">Maklumat terkini mengenai aktiviti dan pencapaian jabatan</p>
+    </div>
+
+    <!-- Slider Container -->
+    <div class="slider" id="slider-container" data-animate>
+      <!-- Slides Track -->
+      <div class="slider-track" id="slider-track">
+        {slides.map((slide) => (
+          <div class="slide" data-slide-id={slide.id}>
+            <div class="slide-inner" style={`background: ${slide.bgGradient};`}>
+              <!-- Icon -->
+              <div class="slide-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[slide.icon]} />
+              </div>
+
+              <!-- Tag -->
+              <span class="slide-tag">{slide.tag}</span>
+
+              <!-- Content -->
+              <div class="slide-content">
+                <h3 class="slide-title">{slide.title}</h3>
+                <p class="slide-description">{slide.description}</p>
+              </div>
+
+              <!-- CTA -->
+              <a href="#" class="slide-cta">
+                Baca Selanjutnya
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button class="slider-arrow slider-arrow-prev" id="slider-prev" aria-label="Slaid sebelumnya">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="slider-arrow slider-arrow-next" id="slider-next" aria-label="Slaid seterusnya">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Dots Navigation -->
+      <div class="slider-dots" id="slider-dots">
+        {slides.map((slide, index) => (
+          <button
+            class={`slider-dot ${index === 0 ? 'active' : ''}`}
+            data-slide-index={index}
+            aria-label={`Pergi ke slaid ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="slider-progress">
+        <div class="slider-progress-bar" id="slider-progress-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Slider Section */
+  .slider-section {
+    padding: var(--space-16) 0;
+    background: var(--light);
+  }
+
+  /* Slider Container */
+  .slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* Slider Track */
+  .slider-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+  }
+
+  /* Individual Slide */
+  .slide {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .slide-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 400px;
+    padding: var(--space-12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background decoration */
+  .slide-inner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .slide-inner::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+  }
+
+  /* Slide Icon */
+  .slide-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--white);
+  }
+
+  /* Slide Tag */
+  .slide-tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Slide Content */
+  .slide-content {
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-title {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--space-4);
+    line-height: 1.3;
+  }
+
+  .slide-description {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin-bottom: var(--space-6);
+  }
+
+  /* Slide CTA */
+  .slide-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    background: var(--white);
+    color: var(--dark);
+    font-weight: 500;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-cta:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .slide-cta svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .slide-cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Navigation Arrows */
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: var(--white);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+    z-index: 10;
+    opacity: 0.9;
+  }
+
+  .slider-arrow:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .slider-arrow svg {
+    color: var(--dark);
+  }
+
+  .slider-arrow-prev {
+    left: var(--space-4);
+  }
+
+  .slider-arrow-next {
+    right: var(--space-4);
+  }
+
+  /* Dots Navigation */
+  .slider-dots {
+    position: absolute;
+    bottom: var(--space-6);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-2);
+    z-index: 10;
+  }
+
+  .slider-dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .slider-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .slider-dot.active {
+    background: var(--white);
+    transform: scale(1.2);
+  }
+
+  /* Progress Bar */
+  .slider-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .slider-progress-bar {
+    height: 100%;
+    background: var(--white);
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .slide-inner {
+      min-height: 350px;
+      padding: var(--space-8);
+    }
+
+    .slide-title {
+      font-size: var(--text-2xl);
+    }
+
+    .slide-description {
+      font-size: var(--text-base);
+    }
+
+    .slider-arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .slider-arrow-prev {
+      left: var(--space-2);
+    }
+
+    .slider-arrow-next {
+      right: var(--space-2);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .slide-inner {
+      min-height: 320px;
+      padding: var(--space-6);
+    }
+
+    .slide-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .slide-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .slide-title {
+      font-size: var(--text-xl);
+    }
+
+    .slider-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Pure JavaScript Slider Implementation
+   * Features: Auto-advance, dots navigation, arrows, pause on hover, touch/swipe
+   */
+
+  class Slider {
+    private container: HTMLElement;
+    private track: HTMLElement;
+    private slides: HTMLElement[];
+    private dots: HTMLElement[];
+    private prevBtn: HTMLElement;
+    private nextBtn: HTMLElement;
+    private progressBar: HTMLElement;
+
+    private currentIndex: number = 0;
+    private slideCount: number = 0;
+    private autoPlayInterval: number | null = null;
+    private progressInterval: number | null = null;
+    private autoPlayDelay: number = 5000;
+    private isPaused: boolean = false;
+    private progress: number = 0;
+
+    // Touch handling
+    private touchStartX: number = 0;
+    private touchEndX: number = 0;
+    private isDragging: boolean = false;
+
+    constructor(containerId: string) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      this.container = container;
+      this.track = container.querySelector('#slider-track') as HTMLElement;
+      this.slides = Array.from(container.querySelectorAll('.slide'));
+      this.dots = Array.from(container.querySelectorAll('.slider-dot'));
+      this.prevBtn = container.querySelector('#slider-prev') as HTMLElement;
+      this.nextBtn = container.querySelector('#slider-next') as HTMLElement;
+      this.progressBar = container.querySelector('#slider-progress-bar') as HTMLElement;
+
+      this.slideCount = this.slides.length;
+
+      this.init();
+    }
+
+    private init(): void {
+      // Event listeners for arrows
+      this.prevBtn?.addEventListener('click', () => this.prev());
+      this.nextBtn?.addEventListener('click', () => this.next());
+
+      // Event listeners for dots
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => this.goToSlide(index));
+      });
+
+      // Pause on hover
+      this.container.addEventListener('mouseenter', () => this.pause());
+      this.container.addEventListener('mouseleave', () => this.resume());
+
+      // Touch events for swipe support
+      this.container.addEventListener('touchstart', (e) => this.handleTouchStart(e), { passive: true });
+      this.container.addEventListener('touchmove', (e) => this.handleTouchMove(e), { passive: true });
+      this.container.addEventListener('touchend', () => this.handleTouchEnd());
+
+      // Keyboard navigation
+      this.container.addEventListener('keydown', (e) => this.handleKeydown(e));
+
+      // Start autoplay
+      this.startAutoPlay();
+    }
+
+    private goToSlide(index: number): void {
+      // Handle wrapping
+      if (index < 0) {
+        index = this.slideCount - 1;
+      } else if (index >= this.slideCount) {
+        index = 0;
+      }
+
+      this.currentIndex = index;
+
+      // Move track
+      const offset = -index * 100;
+      this.track.style.transform = `translateX(${offset}%)`;
+
+      // Update dots
+      this.dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      // Reset progress
+      this.resetProgress();
+    }
+
+    private next(): void {
+      this.goToSlide(this.currentIndex + 1);
+    }
+
+    private prev(): void {
+      this.goToSlide(this.currentIndex - 1);
+    }
+
+    private startAutoPlay(): void {
+      this.stopAutoPlay();
+      this.startProgress();
+
+      this.autoPlayInterval = window.setInterval(() => {
+        if (!this.isPaused) {
+          this.next();
+        }
+      }, this.autoPlayDelay);
+    }
+
+    private stopAutoPlay(): void {
+      if (this.autoPlayInterval) {
+        clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
+      }
+      this.stopProgress();
+    }
+
+    private startProgress(): void {
+      this.progress = 0;
+      this.progressBar.style.width = '0%';
+
+      const step = 100 / (this.autoPlayDelay / 100);
+
+      this.progressInterval = window.setInterval(() => {
+        if (!this.isPaused) {
+          this.progress += step;
+          this.progressBar.style.width = `${Math.min(this.progress, 100)}%`;
+        }
+      }, 100);
+    }
+
+    private stopProgress(): void {
+      if (this.progressInterval) {
+        clearInterval(this.progressInterval);
+        this.progressInterval = null;
+      }
+    }
+
+    private resetProgress(): void {
+      this.progress = 0;
+      this.progressBar.style.width = '0%';
+    }
+
+    private pause(): void {
+      this.isPaused = true;
+    }
+
+    private resume(): void {
+      this.isPaused = false;
+    }
+
+    // Touch handling
+    private handleTouchStart(e: TouchEvent): void {
+      this.touchStartX = e.touches[0].clientX;
+      this.isDragging = true;
+    }
+
+    private handleTouchMove(e: TouchEvent): void {
+      if (!this.isDragging) return;
+      this.touchEndX = e.touches[0].clientX;
+    }
+
+    private handleTouchEnd(): void {
+      if (!this.isDragging) return;
+
+      const diff = this.touchStartX - this.touchEndX;
+      const threshold = 50; // Minimum swipe distance
+
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0) {
+          this.next(); // Swipe left
+        } else {
+          this.prev(); // Swipe right
+        }
+      }
+
+      this.isDragging = false;
+      this.touchStartX = 0;
+      this.touchEndX = 0;
+    }
+
+    // Keyboard navigation
+    private handleKeydown(e: KeyboardEvent): void {
+      if (e.key === 'ArrowLeft') {
+        this.prev();
+      } else if (e.key === 'ArrowRight') {
+        this.next();
+      }
+    }
+  }
+
+  // Initialize slider when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    new Slider('slider-container');
+  });
+</script>

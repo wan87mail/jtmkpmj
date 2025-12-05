@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <!-- JTMK Logo - Professional technology department logo -->
+
+  <!-- Icon/Symbol -->
+  <rect x="2" y="8" width="34" height="34" rx="6" fill="#0066cc"/>
+  <path d="M10 16h6v18h-6z" fill="#ffffff"/>
+  <path d="M10 28h12v6H10z" fill="#ffffff"/>
+  <path d="M18 16h6v6h-6z" fill="#00a8e8"/>
+  <path d="M26 16h6v18h-6z" fill="#ffffff"/>
+  <path d="M26 16h10v6H26z" fill="#ffffff"/>
+
+  <!-- Text: JTMK -->
+  <text x="46" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#1a1a2e">JTMK</text>
+
+  <!-- Subtext -->
+  <text x="46" y="44" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="400" fill="#6c757d">Jabatan Teknologi Maklumat &amp; Komunikasi</text>
+</svg>

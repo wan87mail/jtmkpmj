@@ -1,0 +1,456 @@
+---
+/**
+ * Facilities.astro - Facilities & Activities Section Component
+ * Displays labs, facilities, and student activities
+ * Features: Photo gallery grid, icon features, hover effects
+ */
+
+interface Facility {
+  title: string;
+  description: string;
+  icon: string;
+  gradient: string;
+}
+
+interface Activity {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const facilities: Facility[] = [
+  {
+    title: 'Makmal Komputer',
+    description: 'Dilengkapi dengan komputer terkini dan perisian industri untuk pembelajaran praktikal.',
+    icon: 'desktop',
+    gradient: 'linear-gradient(135deg, #0066cc 0%, #00a8e8 100%)'
+  },
+  {
+    title: 'Makmal Rangkaian',
+    description: 'Peralatan rangkaian Cisco untuk latihan hands-on dalam pengkonfigurasian dan keselamatan.',
+    icon: 'network',
+    gradient: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)'
+  },
+  {
+    title: 'Makmal Multimedia',
+    description: 'Studio rakaman dan penyuntingan video dengan peralatan profesional.',
+    icon: 'video',
+    gradient: 'linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%)'
+  },
+  {
+    title: 'Bilik Kuliah Pintar',
+    description: 'Dilengkapi projektor interaktif dan sistem audio visual untuk pembelajaran efektif.',
+    icon: 'presentation',
+    gradient: 'linear-gradient(135deg, #fd7e14 0%, #ffc107 100%)'
+  }
+];
+
+const activities: Activity[] = [
+  {
+    title: 'Kelab IT',
+    description: 'Platform untuk pelajar mengembangkan kemahiran melalui projek dan aktiviti.',
+    icon: 'users'
+  },
+  {
+    title: 'Pertandingan',
+    description: 'Penyertaan dalam pertandingan inovasi dan hackathon peringkat kebangsaan.',
+    icon: 'trophy'
+  },
+  {
+    title: 'Bengkel & Seminar',
+    description: 'Program pembangunan profesional dengan pakar industri.',
+    icon: 'calendar'
+  },
+  {
+    title: 'Lawatan Industri',
+    description: 'Pendedahan kepada persekitaran kerja sebenar di syarikat teknologi.',
+    icon: 'building'
+  }
+];
+
+// SVG icons
+const icons: Record<string, string> = {
+  desktop: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/> <line x1="8" y1="21" x2="16" y2="21"/> <line x1="12" y1="17" x2="12" y2="21"/>',
+  network: '<rect x="16" y="16" width="6" height="6" rx="1"/> <rect x="2" y="16" width="6" height="6" rx="1"/> <rect x="9" y="2" width="6" height="6" rx="1"/> <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/> <line x1="12" y1="12" x2="12" y2="8"/>',
+  video: '<polygon points="23 7 16 12 23 17 23 7"/> <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+  presentation: '<path d="M2 3h20"/> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/> <path d="m7 21 5-5 5 5"/>',
+  users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/> <circle cx="9" cy="7" r="4"/> <path d="M23 21v-2a4 4 0 0 0-3-3.87"/> <path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  trophy: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/> <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/> <path d="M4 22h16"/> <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/> <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/> <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/> <line x1="16" y1="2" x2="16" y2="6"/> <line x1="8" y1="2" x2="8" y2="6"/> <line x1="3" y1="10" x2="21" y2="10"/>',
+  building: '<rect x="4" y="2" width="16" height="20" rx="2" ry="2"/> <path d="M9 22v-4h6v4"/> <path d="M8 6h.01"/> <path d="M16 6h.01"/> <path d="M12 6h.01"/> <path d="M12 10h.01"/> <path d="M12 14h.01"/> <path d="M16 10h.01"/> <path d="M16 14h.01"/> <path d="M8 10h.01"/> <path d="M8 14h.01"/>'
+};
+---
+
+<section class="facilities" id="aktiviti">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header" data-animate>
+      <h2 class="section-title">Kemudahan & Aktiviti</h2>
+      <p class="section-subtitle">
+        Kemudahan moden dan aktiviti menarik untuk menyokong pembelajaran dan pembangunan pelajar
+      </p>
+    </div>
+
+    <!-- Facilities Grid -->
+    <div class="facilities-section" data-animate>
+      <h3 class="subsection-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons.desktop} />
+        Kemudahan Jabatan
+      </h3>
+      <div class="facilities-grid">
+        {facilities.map((facility) => (
+          <div class="facility-card">
+            <div class="facility-visual" style={`background: ${facility.gradient};`}>
+              <div class="facility-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[facility.icon]} />
+              </div>
+              <div class="facility-decoration-1"></div>
+              <div class="facility-decoration-2"></div>
+            </div>
+            <div class="facility-content">
+              <h4 class="facility-title">{facility.title}</h4>
+              <p class="facility-description">{facility.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Activities Section -->
+    <div class="activities-section" data-animate>
+      <h3 class="subsection-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons.calendar} />
+        Aktiviti Pelajar
+      </h3>
+      <div class="activities-grid">
+        {activities.map((activity) => (
+          <div class="activity-card">
+            <div class="activity-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[activity.icon]} />
+            </div>
+            <div class="activity-content">
+              <h4 class="activity-title">{activity.title}</h4>
+              <p class="activity-description">{activity.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner" data-animate>
+      <div class="cta-content">
+        <h3>Sertai Keluarga JTMK</h3>
+        <p>Daftarkan diri anda hari ini dan mulakan perjalanan kerjaya dalam bidang teknologi maklumat!</p>
+      </div>
+      <a href="#hubungi" class="btn btn-primary btn-lg">
+        Hubungi Kami
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Facilities Section */
+  .facilities {
+    padding: var(--space-20) 0;
+    background: var(--white);
+  }
+
+  /* Subsection Title */
+  .subsection-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--space-6);
+  }
+
+  .subsection-title svg {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+  }
+
+  /* Facilities Section */
+  .facilities-section {
+    margin-bottom: var(--space-16);
+  }
+
+  .facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  /* Facility Card */
+  .facility-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+    border: 1px solid var(--grey-light);
+  }
+
+  .facility-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .facility-visual {
+    position: relative;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .facility-decoration-1 {
+    position: absolute;
+    top: -30%;
+    right: -20%;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .facility-decoration-2 {
+    position: absolute;
+    bottom: -40%;
+    left: -10%;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+  }
+
+  .facility-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .facility-icon svg {
+    width: 32px;
+    height: 32px;
+    color: var(--white);
+  }
+
+  .facility-content {
+    padding: var(--space-5);
+  }
+
+  .facility-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--space-2);
+  }
+
+  .facility-description {
+    font-size: var(--text-sm);
+    color: var(--grey);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* Activities Section */
+  .activities-section {
+    background: var(--light);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-10);
+    margin-bottom: var(--space-12);
+  }
+
+  .activities-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  /* Activity Card */
+  .activity-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    transition: all var(--transition);
+    border: 1px solid var(--grey-light);
+  }
+
+  .activity-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+  }
+
+  .activity-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 168, 232, 0.1) 100%);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition);
+  }
+
+  .activity-card:hover .activity-icon {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  }
+
+  .activity-icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+    transition: color var(--transition);
+  }
+
+  .activity-card:hover .activity-icon svg {
+    color: var(--white);
+  }
+
+  .activity-content {
+    flex: 1;
+  }
+
+  .activity-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: var(--space-1);
+  }
+
+  .activity-description {
+    font-size: var(--text-sm);
+    color: var(--grey);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-10);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-content h3 {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: var(--space-2);
+  }
+
+  .cta-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+    max-width: 500px;
+  }
+
+  .cta-banner .btn {
+    position: relative;
+    z-index: 1;
+    background: var(--white);
+    color: var(--primary);
+    border-color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .cta-banner .btn:hover {
+    background: var(--light);
+    border-color: var(--light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .facilities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .activities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-banner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cta-content p {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .facilities {
+      padding: var(--space-16) 0;
+    }
+
+    .activities-section {
+      padding: var(--space-8);
+    }
+
+    .cta-banner {
+      padding: var(--space-8);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .facilities-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .activities-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .activity-card {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+  }
+</style>
